@@ -1,10 +1,2 @@
 # Atom's remote-sync package config
 .remote-sync.json
-
-# Ignore build files
-*.o
-*.ii
-*.s
-
-# Ignore binary
-VorTx

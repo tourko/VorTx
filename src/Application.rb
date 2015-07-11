@@ -16,8 +16,11 @@ class Application
   # Create Application instance or return the existing one
   #
   def Application.create
-    @@application = new unless @@application
-    return @@application
+    @@application = new.tap do |app|
+      Log.debug("Creating new application object")
+    end unless @@application
+
+    @@application
   end
 
   #
@@ -25,5 +28,10 @@ class Application
   #
   def run
     Log.debug("Running application")
+
+    while true
+      Log.debug("Sleeping for 1 second")
+      sleep(1)
+    end
   end
 end

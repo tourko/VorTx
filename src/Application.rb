@@ -10,6 +10,7 @@ require_relative 'log'
 class Application
   private_class_method :new
 
+  @running = false
   @@application = nil
 
   #
@@ -17,21 +18,38 @@ class Application
   #
   def Application.create
     @@application = new.tap do |app|
-      Log.debug("Creating new application object")
+      Log.debug("Creating new application object.")
     end unless @@application
 
     @@application
+  end
+
+  def start
+    begin
+      if not @runnig
+        Log.info("Starting the application.")
+        @running = true
+        self.run
+      end
+    rescue Interrupt
+      Log.info("Ctrl-C is pressed. Stopping the application.")
+      self.stop
+    end
+  end
+
+  def stop
+    if @runnig
+      @runnig = false
+    end
   end
 
   #
   # Run the application
   #
   def run
-    Log.debug("Running application")
-
-    while true
-      Log.debug("Sleeping for 1 second")
-      sleep(1)
+    while @running
+      Log.debug("Application is runnig. Sleeping for 15 second.")
+      sleep(15)
     end
   end
 end
